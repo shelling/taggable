@@ -1,0 +1,14 @@
+grammar Taggable
+  rule document
+    ( text / tag )*
+  end
+
+  rule text
+    [^<]+
+  end
+
+  rule tag
+    "<" [^>]+ ">" (text / tag)* "</" [^>]+ &{|seq| seq[1].text_value == seq[5].text_value } ">"
+  #  0    1    2        3        4     5
+  end
+end
