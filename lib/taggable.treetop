@@ -1,14 +1,14 @@
 grammar Taggable
   rule document
-    ( text / tag )*
+    ( text / tag )* <Document>
   end
 
   rule text
-    [^<]+
+    [a-zA-Z\-\_\ ]+ <Text>
   end
 
   rule tag
-    "<" [^>]+ ">" (text / tag)* "</" [^>]+ &{|seq| seq[1].text_value == seq[5].text_value } ">"
+    "<" name:([^>]+) ">" content:(text / tag)* "</" [^>]+ &{|seq| seq[1].text_value == seq[5].text_value } ">" <T>
   #  0    1    2        3        4     5
   end
 end
