@@ -22,13 +22,13 @@ module Taggable
 
   class Text < Treetop::Runtime::SyntaxNode
     def tokenize
-      text_value
+      [:content, text_value]
     end
   end
 
   class T < Treetop::Runtime::SyntaxNode
     def tokenize
-      [name.text_value.to_sym, content.elements.map(&:tokenize)]
+      [name.text_value.to_sym, ([Text, T].include?(content.class) ? content.tokenize : (content.elements.empty? ? nil : content.elements.map(&:tokenize)))]
     end
   end
 end

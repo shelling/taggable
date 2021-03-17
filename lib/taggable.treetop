@@ -1,6 +1,6 @@
 grammar Taggable
   rule document
-    ( text / tag )* <Document>
+    text / tag* <Document>
   end
 
   rule text
@@ -8,7 +8,7 @@ grammar Taggable
   end
 
   rule tag
-    "<" name:([^>]+) ">" content:(text / tag)* "</" [^>]+ &{|seq| seq[1].text_value == seq[5].text_value } ">" <T>
+    "<" name:([^>]+) ">" content:(text / tag*) "</" [^>]+ &{|seq| seq[1].text_value == seq[5].text_value } ">" <T>
   #  0    1    2        3        4     5
   end
 end
