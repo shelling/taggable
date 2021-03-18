@@ -16,13 +16,13 @@ module Taggable
 
   class Document < Treetop::Runtime::SyntaxNode
     def tokenize
-      elements[0].tokenize
+      elements.map(&:tokenize)
     end
   end
 
   class Text < Treetop::Runtime::SyntaxNode
     def tokenize
-      [:content, text_value]
+      [[:content, text_value]]
     end
   end
 
